@@ -14,7 +14,7 @@ type Engine =
 type Conf = {
   Engine: Engine
   TimeOut: int
-  BinPath: string
+  BinPath: string array
   Argv: string array
   Env: Map<string, string>
   SeedDir: string
@@ -68,7 +68,7 @@ module Conf =
 
   let load fname pBlk iBlk iMax dMax =
     let json = loadJson fname
-    let binPath = getPropStr json "engine_path"
+    let binPath = getPropStrs json "engine_path"
     let argv = getPropStrs json "argv"
     {
       Engine = getPropStr json "engine" |> toEngine
@@ -80,7 +80,7 @@ module Conf =
       TmpDir = getPropStr json "tmp_dir"
       BugDir = getPropStr json "bug_dir"
       PreprocDir = getPropStr json "preproc_dir"
-      BuiltIns = getBuiltIns binPath argv
+      BuiltIns = getBuiltIns binPath.[0] argv
       Filters = getPropStrs json "filters"
       Jobs = getPropInt json "jobs"
       ProbBlk = pBlk

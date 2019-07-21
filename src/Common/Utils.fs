@@ -24,9 +24,11 @@ let (+/)  p1 p2 = Path.Combine (p1, getFileName p2)
 
 let mkDir dir = Directory.CreateDirectory dir |> ignore; dir
 
+let getParentDir path = Directory.GetParent(path).Name
+
 let checkDir path =
   let dir = getDirName path
   if existDir dir then path
   else mkDir dir |> ignore; path
 
-let renameFile src dst = File.Move (src, dst)
+let copyFile src dst = File.Copy (src, dst)

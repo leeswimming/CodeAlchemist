@@ -41,7 +41,7 @@ let fuzzMain conf sPool gPool rndSeed = async {
   let dMax = conf.DepthMax
   let prefix = sprintf "%s/%d" conf.TmpDir rndSeed
   let bugPrefix = sprintf "%s/%d" conf.BugDir rndSeed
-  let exec = Executor.getAsyncExec conf conf.TmpDir
+  let exec = Executor.getAsyncExec conf
   let isBug = Oracle.getOracle conf.Engine
   let generate = mkGenerate conf.IterBlk sPool gPool rnd conf.ProbBlk
 
@@ -51,9 +51,12 @@ let fuzzMain conf sPool gPool rndSeed = async {
     let sb = new SB ()
     generate sb iMax dMax Context.empty |> ignore
     sb.ToString() |> writeFile fname |> ignore
-    let! ret = exec fname
-    if isBug ret |> not then rmFile fname
-    else renameFile fname (sprintf "%s-%d.js" bugPrefix idx)
+    for binPath in conf.BinPath do
+      let! ret = exec binPath conf.TmpDir fname
+      let build = getParentDir binPath
+      if isBug ret then
+        copyFile fname (sprintf "%s-%d-%s.js" bugPrefix idx build)
+    rmFile fname
     idx <- idx + 1
 }
 

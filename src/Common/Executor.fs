@@ -50,8 +50,7 @@ let asyncExec timeout binPath argv dir js = async {
   return struct (retCode, out, err)
 }
 
-let getAsyncExec conf =
-  let binPath = conf.BinPath
+let getAsyncExec conf binPath =
   let argv = Array.filter (String.neq "") conf.Argv |> Array.append [|binPath|]
   Map.iter (fun k v -> Environment.SetEnvironmentVariable (k, v)) conf.Env
   asyncExec conf.TimeOut binPath argv

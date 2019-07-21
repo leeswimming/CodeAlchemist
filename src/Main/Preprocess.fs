@@ -53,7 +53,8 @@ let parseResult (out: string) =
 let instruments conf =
   let rewriteDir = conf.PreprocDir +/ "rewrite"
   let outDir = conf.PreprocDir +/ "type" |> mkDir
-  let exec = Executor.getAsyncExec conf rewriteDir
+  let binPath = conf.BinPath.[0]
+  let exec = Executor.getAsyncExec conf binPath rewriteDir
   let instrument js = async {
     let! struct (_, out, _) = exec js
     writeFile (outDir +/ js) (parseResult out)
