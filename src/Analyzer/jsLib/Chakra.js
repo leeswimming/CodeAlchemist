@@ -32,16 +32,6 @@ var codealchemist_types = {
   "ArrayBuffer" : ArrayBuffer,
   "DataView" : DataView,
   "Promise" : Promise,
-  "Intl.Collator" : Intl.Collator,
-  "Intl.DateTimeFormat" : Intl.DateTimeFormat,
-  "Intl.NumberFormat" : Intl.NumberFormat,
-  "WebAssembly.Module" : WebAssembly.Module,
-  "WebAssembly.Instance" : WebAssembly.Instance,
-  "WebAssembly.Memory" : WebAssembly.Memory,
-  "WebAssembly.Table" : WebAssembly.Table,
-  "WebAssembly.CompileError" : WebAssembly.CompileError,
-  "WebAssembly.LinkError" : WebAssembly.LinkError,
-  "WebAssembly.RuntimeError" : WebAssembly.RuntimeError,
 };
 
 var codealchemist_logs;
