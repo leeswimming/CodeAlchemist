@@ -24,8 +24,8 @@ module Signal =
     | _ -> Normal
 
   let isCrash = function
-    | Normal | SIGALRM | SIGKILL | SIGABRT -> false
-    | _ -> true
+    | SIGILL | SIGSEGV -> true
+    | _ -> false
 
 module Oracle =
   let v8Table = [|
